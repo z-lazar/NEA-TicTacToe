@@ -72,10 +72,4 @@ class InvalidMoveError(Exception):
 if __name__ == "__main__":
     pass
 
-def debugging():
-    g = Game()
-    g.do_move(0,2,'o')
-    g.do_move(1,1,'o')
-    g.do_move(2,0,'o')
-    print(g)
-    print(g.check_winner('x', 'o'))
+#If you see this the commit worked
