@@ -13,7 +13,19 @@ class Gui(Ui):
         self._board = Game('x', 'o')
 
     def run(self):
+        window = tk.Tk()
+        play = tk.Button(
+            text='Play',
+            command=self.play_callback).pack()
+        quit_ = tk.Button(
+            text='Quit',
+            command=window.quit
+        )
+
+    def play_callback():
         pass
+    
+
 
 class Terminal(Ui):
     def __init__(self):
@@ -35,10 +47,11 @@ class Terminal(Ui):
             print(f'Player {self._board.check_winner()} has won')
         
 def Debugging():
-    te = Terminal()
+    te = Gui()
     te.run()
 
 Debugging()
+
 
 
 
