@@ -16,17 +16,28 @@ class Gui(Ui):
         window = tk.Tk()
         play = tk.Button(
             text='Play',
-            command=self.play_callback).pack()
+            command=self.play_callback)
         quit_ = tk.Button(
             text='Quit',
             command=window.quit
         )
+        play.pack()
+        quit_.pack()
+        tk.mainloop()
 
-    def play_callback():
+    def play_callback(self):
+        for _ in range(9):
+            b = tk.Button(
+                text='', 
+                command=self.move,
+                width=5,
+                height=5
+            )
+            b.pack()
+    
+    def move(self):
         pass
     
-
-
 class Terminal(Ui):
     def __init__(self):
         self._board = Game('x', 'o')

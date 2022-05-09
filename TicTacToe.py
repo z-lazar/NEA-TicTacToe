@@ -16,6 +16,7 @@ if __name__ == "__main__":
         terminal = Terminal()
         terminal.run()
     elif argv[1] == 'g':
-        pass
+        gui = Gui()
+        gui.run()
     else:
         usage()
