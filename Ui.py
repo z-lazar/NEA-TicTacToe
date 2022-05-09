@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
+from curses import window
 from Game import Game, InvalidMoveError
-import tkinter as tk
+from tkinter import *
+from tkinter.ttk import *
 
 class Ui(ABC):
 
@@ -8,35 +10,48 @@ class Ui(ABC):
     def run(self):
         raise NotImplementedError
 
+class Square(Button):
+    def __init__(self, r, c):
+        Button.__init__(self, command=None, master=window_play, height=100, width=100)
+        self._row = r
+        self._col = c
+        self._state = ''
+    
+    def change_state(self, new_state):
+        self._state = new_state
+
 class Gui(Ui):
     def __init__(self):
         self._board = Game('x', 'o')
+        self._squares = []
 
     def run(self):
-        window = tk.Tk()
-        play = tk.Button(
+        window = Tk()
+        play = Button(
             text='Play',
-            command=self.play_callback)
-        quit_ = tk.Button(
+            command=lambda:[window.destroy(), self.play_callback()])
+        quit_ = Button(
             text='Quit',
-            command=window.quit
+            command=window.destroy
         )
         play.pack()
         quit_.pack()
-        tk.mainloop()
+        mainloop()
 
     def play_callback(self):
-        for _ in range(9):
-            b = tk.Button(
-                text='', 
-                command=self.move,
-                width=5,
-                height=5
-            )
-            b.pack()
+        window_play = Tk()
+        for r in range(3):
+            for c in range(3):
+                b = Button(
+                    text='', 
+                    master = window_play,
+                    command=self.move 
+                )
+                b.grid(row=r, column=c)
+        mainloop()
     
     def move(self):
-        pass
+        self._board.do_move()
     
 class Terminal(Ui):
     def __init__(self):
