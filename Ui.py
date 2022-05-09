@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from curses import window
 from Game import Game, InvalidMoveError
 from tkinter import *
 from tkinter.ttk import *
@@ -11,14 +10,17 @@ class Ui(ABC):
         raise NotImplementedError
 
 class Square(Button):
-    def __init__(self, r, c):
-        Button.__init__(self, command=None, master=window_play, height=100, width=100)
+    def __init__(self, master, r, c):
+        Button.__init__(self, command=self.move, master=master, text=self._state, height=100, width=100)
         self._row = r
         self._col = c
         self._state = ''
     
     def change_state(self, new_state):
         self._state = new_state
+        
+    def move(self):
+        pass
 
 class Gui(Ui):
     def __init__(self):
@@ -38,6 +40,7 @@ class Gui(Ui):
         quit_.pack()
         mainloop()
 
+    #change this to use the square class which inherits from the tk Button class
     def play_callback(self):
         window_play = Tk()
         for r in range(3):
@@ -51,7 +54,7 @@ class Gui(Ui):
         mainloop()
     
     def move(self):
-        self._board.do_move()
+        pass
     
 class Terminal(Ui):
     def __init__(self):
